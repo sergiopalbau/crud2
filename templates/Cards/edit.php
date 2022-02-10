@@ -19,12 +19,12 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="cards form content">
-            <?= $this->Form->create($card) ?>
+            <?= $this->Form->create($card,['type' => 'file']) ?>
             <fieldset>
                 <legend><?= __('Edit Card') ?></legend>
                 <?php
                     echo $this->Form->control('user_id', ['options' => $users]);
-                    echo $this->Form->control('img');
+                    echo $this->Form->control('img',['type' => 'file'], require false);
                     echo $this->Form->control('descriptionEs');
                     echo $this->Form->control('descriptionEn');
                     echo $this->Form->control('descriptionFr');
