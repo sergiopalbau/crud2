@@ -24,7 +24,14 @@
                 </tr>
                 <tr>
                     <th><?= __('Img') ?></th>
-                    <td><?= h($card->img) ?></td>
+                    <td>
+                        <?= h($card->img); ?>
+                        <br>
+                        <?= $this->Html->image('cards/'.$card->img, array('width'=>300)) ?>
+
+                
+                </td>
+
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>
