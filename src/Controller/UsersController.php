@@ -11,6 +11,18 @@ namespace App\Controller;
  */
 class UsersController extends AppController
 {
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->Auth->allow(['logout']);
+    }
+
+    public function logout()
+    {
+        $this->Flash->success('You are now logged out.');
+        return $this->redirect($this->Auth->logout());
+    }
     /**
      * Index method
      *
