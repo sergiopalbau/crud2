@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\frozenTime;
+
 /**
  * Cards Controller
  *
@@ -52,6 +54,27 @@ class CardsController extends AppController
         $card = $this->Cards->newEmptyEntity();
         if ($this->request->is('post')) {
             $card = $this->Cards->patchEntity($card, $this->request->getData());
+
+            //add image
+
+            $image = $this->request->getData ('img');
+           
+            if ($image) {
+                $tiempo = FrozenTime::now()->toUnixString();
+                $nombreImagen = $tiempo."_".$image->getClientFileName();
+                $destino=WWW_ROOT."img/cards/".$nombreImagen;
+                print_r($destino);
+                exit();
+                $image->moveTo($destino);
+
+                $card->img = $nombreImagen;
+                //print_r($nombreImagen); exit ();
+            }
+            //print_r ($image);
+            //exit ();
+
+
+
             if ($this->Cards->save($card)) {
                 $this->Flash->success(__('The card has been saved.'));
 
