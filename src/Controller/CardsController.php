@@ -94,7 +94,27 @@ class CardsController extends AppController
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $nombreImagenAnterior = $card->img;
+
             $card = $this->Cards->patchEntity($card, $this->request->getData());
+            $image = $this->request->getData('img');  //recuperar lo que vino del form
+            $card->img= $nombreImagenAnterior;
+               
+            if ($image->getClientFileName()){
+
+                if (file_exists(WWW_ROOT.'img/cards/'.$card['img'])){
+                    unlink(WWW_ROOT.'img/cards/'.$nombreImagenAnterior);
+                }
+                $tiempo = FrozenTime::now()->toUnixString();
+                $nombreImagen = $tiempo."_".$image->getClientFileName();
+                $destino=WWW_ROOT."img/cards/".$nombreImagen;
+                $image->moveTo($destino);
+                $card->img = $nombreImagen;  
+
+            }
+
+
+
             if ($this->Cards->save($card)) {
                 $this->Flash->success(__('The card has been saved.'));
 

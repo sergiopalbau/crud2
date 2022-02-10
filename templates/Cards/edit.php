@@ -24,7 +24,7 @@
                 <legend><?= __('Edit Card') ?></legend>
                 <?php
                     echo $this->Form->control('user_id', ['options' => $users]);
-                    echo $this->Form->control('img',['type' => 'file'], require false);
+                    echo $this->Form->control('img',['type' => 'file', 'required'=>false]);
                     echo $this->Form->control('descriptionEs');
                     echo $this->Form->control('descriptionEn');
                     echo $this->Form->control('descriptionFr');
