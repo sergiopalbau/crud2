@@ -63,15 +63,10 @@ class CardsController extends AppController
                 $tiempo = FrozenTime::now()->toUnixString();
                 $nombreImagen = $tiempo."_".$image->getClientFileName();
                 $destino=WWW_ROOT."img/cards/".$nombreImagen;
-                print_r($destino);
-                exit();
                 $image->moveTo($destino);
-
-                $card->img = $nombreImagen;
-                //print_r($nombreImagen); exit ();
+                $card->img = $nombreImagen;               
             }
-            //print_r ($image);
-            //exit ();
+            
 
 
 
@@ -122,6 +117,14 @@ class CardsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $card = $this->Cards->get($id);
+        
+        //delete img
+        if (file_exists((WWW_ROOT.'img/cards/'.$card['img']))){
+            
+            unlink(WWW_ROOT.'img/cards/'.$card['img']);
+
+        }
+
         if ($this->Cards->delete($card)) {
             $this->Flash->success(__('The card has been deleted.'));
         } else {
