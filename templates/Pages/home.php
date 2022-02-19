@@ -47,7 +47,17 @@ if (!Configure::read('debug')) :
     );
 endif;
 
-$cakeDescription = 'CakePHP: the rapid development PHP framework';
+$cakeDescription = 'crudRGS: OUR LIFE-SAVING RULES';
+
+    //read the dictory for show the rules ---------------      
+    $directory= WWW_ROOT.'/img/raw';
+    $files = scandir($directory);
+    
+    if ($files[0]=='.' && $files[1]='..')
+        array_splice($files,0,2);
+           
+
+                            
 ?>
 <!DOCTYPE html>
 <html>
@@ -71,11 +81,11 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 <body>
     <header>
         <div class="container text-center">
-            <a href="https://cakephp.org/" target="_blank" rel="noopener">
+            <!-- <a href="https://cakephp.org/" target="_blank" rel="noopener">
                 <img alt="CakePHP" src="https://cakephp.org/v2/img/logos/CakePHP_Logo.svg" width="350" />
-            </a>
+            </a> -->
             <h1>
-                Welcome to CakePHP <?= Configure::version() ?> Strawberry (🍓)
+                Welcome to crudRGS 
             </h1>
         </div>
     </header>
@@ -83,10 +93,11 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         <div class="container">
             <div class="content">
                 <div class="row">
+                    r<img src="webroot/img/fodo_reglas.png" alt="backimage">
+                </div>
+                <!-- <div class="row">
                     <div class="column">
-                        <div class="message default text-center">
-                            <small>Please be aware that this page will not be shown if you turn off debug mode unless you replace templates/Pages/home.php with your own version.</small>
-                        </div>
+                        
                         <div id="url-rewriting-warning" style="padding: 1rem; background: #fcebea; color: #cc1f1a; border-color: #ef5753;">
                             <ul>
                                 <li class="bullet problem">
@@ -96,40 +107,32 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                                 </li>
                             </ul>
                         </div>
-                        <?php Debugger::checkSecurityKeys(); ?>
+                        <?php //Debugger::checkSecurityKeys(); ?>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="column">
-                        <h4>Environment</h4>
-                        <ul>
-                        <?php if (version_compare(PHP_VERSION, '7.2.0', '>=')) : ?>
-                            <li class="bullet success">Your version of PHP is 7.2.0 or higher (detected <?= PHP_VERSION ?>).</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP is too low. You need PHP 7.2.0 or higher to use CakePHP (detected <?= PHP_VERSION ?>).</li>
-                        <?php endif; ?>
+                                              
+                        <?php 
+                        
+                        for ($i=0; $i< count($files); $i++){
+                       
+                        //echo $directory; 
+                        echo $i. " -" .$files[$i]."<BR>";
+                           
 
-                        <?php if (extension_loaded('mbstring')) : ?>
-                            <li class="bullet success">Your version of PHP has the mbstring extension loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP does NOT have the mbstring extension loaded.</li>
-                        <?php endif; ?>
-
-                        <?php if (extension_loaded('openssl')) : ?>
-                            <li class="bullet success">Your version of PHP has the openssl extension loaded.</li>
-                        <?php elseif (extension_loaded('mcrypt')) : ?>
-                            <li class="bullet success">Your version of PHP has the mcrypt extension loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP does NOT have the openssl or mcrypt extension loaded.</li>
-                        <?php endif; ?>
-
-                        <?php if (extension_loaded('intl')) : ?>
-                            <li class="bullet success">Your version of PHP has the intl extension loaded.</li>
-                        <?php else : ?>
-                            <li class="bullet problem">Your version of PHP does NOT have the intl extension loaded.</li>
-                        <?php endif; ?>
-                        </ul>
+                        }
+                        
+                        ?>
                     </div>
+
+
+
+
+
+
+
+
                     <div class="column">
                         <h4>Filesystem</h4>
                         <ul>
