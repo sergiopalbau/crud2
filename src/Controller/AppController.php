@@ -65,7 +65,7 @@ class AppController extends Controller
         // continues to work.
         $this->Auth->allow(['display']);
     
-
+      
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.

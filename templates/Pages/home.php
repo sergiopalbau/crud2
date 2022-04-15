@@ -19,8 +19,16 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\Debugger;
 use Cake\Http\Exception\NotFoundException;
+/* ----------------------------------------------------------------------------------------
+//recuperamos el estado de la session para saber si hay un usuario activo registrado
+$session = $this->request->getSession();
+$session = $this->request->getAttribute('session');
+$userName = $session->read('Auth.User.name');
 
-$this->disableAutoLayout();
+if ($userName == null)
+    $this->disableAutoLayout();
+
+*/
 
 $checkConnection = function (string $name) {
     $error = null;
@@ -55,10 +63,13 @@ $cakeDescription = 'crudRGS: OUR LIFE-SAVING RULES';
     
     if ($files[0]=='.' && $files[1]='..')
         array_splice($files,0,2);
-           
-
-                            
+    
+    
+  
+    
+    
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,12 +92,30 @@ $cakeDescription = 'crudRGS: OUR LIFE-SAVING RULES';
 <body>
     <header>
         <div class="container text-center">
-            <div class="row">
-                <div class="column column-offset-75">
-                    <a class="button" href="users/">LOGIN</a>
-                    
+
+            <?php
+
+                //recuperamos el estado de la session para saber si hay un usuario activo registrado
+                $session = $this->request->getSession();
+                $session = $this->request->getAttribute('session');
+                $userName = $session->read('Auth.User.name');
+
+                
+
+                if ($userName == null){
+                   
+                    $this->disableAutoLayout();
+                         
+            ?>
+             <div class="row">
+                    <div class="column column-offset-75">
+                        <a class="button" href="users/login">LOGIN</a>
+                        
+                    </div>
                 </div>
-            </div>
+            <?php } //end if user logeado ?>
+            
+
             <br><br>
             <h1>
                 Welcome to crudRGS 
@@ -120,16 +149,13 @@ $cakeDescription = 'crudRGS: OUR LIFE-SAVING RULES';
                             </div>
                            
 
-                        <?php
-                      
-
-
-                        } ?>
+                        <?php } ?>
                                     
                 
                
             </div>
         </div>
     </main>
+    
 </body>
 </html>
