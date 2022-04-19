@@ -50,11 +50,18 @@ class DisplaysController extends AppController
     public function add()
     {
         $display = $this->Displays->newEmptyEntity();
+        debug($display);
+        echo "<br><hr>";
+        
+
         if ($this->request->is('post')) {
+            debug ($_POST);
+            //array(2) { ["reader_id"]=> string(1) "1" ["card_id"]=> string(2) "11" } 
             $display = $this->Displays->patchEntity($display, $this->request->getData());
+            debug ($display);
             if ($this->Displays->save($display)) {
                 $this->Flash->success(__('The display has been saved.'));
-
+                exit();
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The display could not be saved. Please, try again.'));
@@ -63,6 +70,29 @@ class DisplaysController extends AppController
         $cards = $this->Displays->Cards->find('list', ['limit' => 200])->all();
         $this->set(compact('display', 'readers', 'cards'));
     }
+
+    public function addGet($card=null, $reader = null)
+    {
+        $display = $this->Displays->newEmptyEntity();
+        debug($display);
+        echo "<br><hr>";
+        $data = ["reader_id"=>$reader ,"card_id"=>$card];
+        // debug($data);exit();
+        $display = $this->Displays->patchEntity($display, $data, ['validate' => false]);
+        echo " despues de añadir <br><br><br>";
+        debug ($display);
+        
+        
+            if ($this->Displays->save($display)) {
+                $this->Flash->success(__('The display has been saved.'));
+                // exit();
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The display could not be saved. Please, try again.'));
+       
+        
+    }
+
 
     /**
      * Edit method
