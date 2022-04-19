@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\I18n\frozenTime;
+use Cake\ORM\Locator\LocatorAwareTrait;
+
 
 /**
  * Cards Controller
@@ -13,6 +15,13 @@ use Cake\I18n\frozenTime;
  */
 class CardsController extends AppController
 {
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->Auth->allow(['envia','sendAll','cardImage']);
+       // $this->Auth->allow(['logout', 'add']);
+    }
     /**
      * Index method
      *
@@ -152,5 +161,79 @@ class CardsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+
+    public function sendAll (){
+        $cards = $this->paginate($this->Cards);
+        echo json_encode($cards);
+        exit();
+
+        /*
+        if ($id == null){
+            $this->Flash->success(__('The card no existe.'));
+            return;
+        }
+        $card = $this->Cards->get($id);
+
+        $this->set(compact('card'));
+        */
+
+    
+    }
+    public function cardImage ($id=null, $txt=null){
+
+              
+        print "id ". $id . "  - txt ". $txt . "<br><hr><br>";
+
+        $query = $this->getTableLocator()->get('Readers')
+                    ->find()
+                    ->select(['id','email'])
+                    ->where(['email'=>"$txt"])
+                    ->toList();
+        
+        
+        if (sizeof($query) == 1){
+               echo "<hr> Existe el lector ... <br>" . $query[0]['id'] ."-> ". $query[0]['email']."<br>";
+              // $sql = "INSERT INTO displays (reader_id, card_id, created, modified) VALUES (1, 12, NULL, NULL);";
+              
+           }
+
+        //}
+        // $query = $this->getTableLocator()->get('Readers')
+        // ->find()
+        // ->select(['id','email'])
+        // ->where(['email'=>'lector@lector1.com'])
+        // ->toList();
+
+
+
+       
+
+        // $query = $this->getTableLocator()->get('Readers')->find();
+        // $query->where(['email'=>'lector1@lector1.com']);
+
+
+
+        // debug ($query->all());
+        // $query = $this->getTableLocator()->get('Readers')->find();
+        // $query->where(['email'=>'lector2@gmail.com']);
+        // $reader = $query->all();
+        // echo $reader->id;
+        // debug ($query->all());
+       
+        // foreach ($query->all() as $article) {
+        //     debug($article->email);
+        // }
+        exit();
+        $card = $this->Cards->get($id);
+        //print_r ($card);
+        echo $card['img'];
+        $uri = WWW_ROOT.'img/cards/'.$card['img'];
+        //echo $uri;
+        echo "<img src='$uri' alt=''>";
+        //echo json_encode ($card);
+        exit();
+
     }
 }
