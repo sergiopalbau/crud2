@@ -73,20 +73,27 @@ class DisplaysController extends AppController
 
     public function addGet($card=null, $reader = null)
     {
+        if (!isset($card) || !isset ($reader)){
+            echo " there isn't arguments";
+            exit ();
+        }
+
         $display = $this->Displays->newEmptyEntity();
-        debug($display);
-        echo "<br><hr>";
+        //debug($display);
+        //echo "<br><hr>";
         $data = ["reader_id"=>$reader ,"card_id"=>$card];
         // debug($data);exit();
         $display = $this->Displays->patchEntity($display, $data, ['validate' => false]);
-        echo " despues de añadir <br><br><br>";
-        debug ($display);
+        //echo " despues de añadir <br><br><br>";
+        //debug ($display);
         
         
             if ($this->Displays->save($display)) {
-                $this->Flash->success(__('The display has been saved.'));
+                //$this->Flash->success(__('The display has been saved.'));
                 // exit();
-                return $this->redirect(['action' => 'index']);
+                //return $this->redirect(['action' => 'index']);
+                return $this->redirect("/cards/view/$card");
+              
             }
             $this->Flash->error(__('The display could not be saved. Please, try again.'));
        
