@@ -3,6 +3,12 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Card $card
  */
+
+//  var_dump ($card);
+//  echo "<br><hr><br>";
+//  var_dump ($this);
+//  echo "<br><hr><br>";
+//  exit();
 ?>
 <div class="row">
     <aside class="column">
@@ -41,10 +47,10 @@
                     <th><?= __('Created') ?></th>
                     <td><?= h($card->created) ?></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th><?= __('Modified') ?></th>
                     <td><?= h($card->modified) ?></td>
-                </tr>
+                </tr> -->
             </table>
             <div class="text">
                 <strong><?= __('DescriptionEs') ?></strong>
@@ -73,9 +79,9 @@
                             <th><?= __('Id') ?></th>
                             <th><?= __('Reader Id') ?></th>
                             <th><?= __('Card Id') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
+                            <th><?= __('Date (mm/dd/YY)') ?></th>
+                            <!-- <th><?= __('Modified') ?></th> -->
+                            <!-- <th class="actions"><?= __('Actions') ?></th> -->
                         </tr>
                         <?php foreach ($card->displays as $displays) : ?>
                         <tr>
@@ -83,12 +89,12 @@
                             <td><?= h($displays->reader_id) ?></td>
                             <td><?= h($displays->card_id) ?></td>
                             <td><?= h($displays->created) ?></td>
-                            <td><?= h($displays->modified) ?></td>
-                            <td class="actions">
+                            <!-- <td><?= h($displays->modified) ?></td> -->
+                            <!-- <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'Displays', 'action' => 'view', $displays->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'Displays', 'action' => 'edit', $displays->id]) ?>
                                 <?= $this->Form->postLink(__('Delete'), ['controller' => 'Displays', 'action' => 'delete', $displays->id], ['confirm' => __('Are you sure you want to delete # {0}?', $displays->id)]) ?>
-                            </td>
+                            </td> -->
                         </tr>
                         <?php endforeach; ?>
                     </table>
