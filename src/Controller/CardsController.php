@@ -19,7 +19,7 @@ class CardsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        $this->Auth->allow(['envia','sendAll','cardImage']);
+        $this->Auth->allow(['image','sendAll','cardImage']);
        // $this->Auth->allow(['logout', 'add']);
     }
     /**
@@ -163,24 +163,26 @@ class CardsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    /**
+     * sendAll metods
+     * return json with all cards.
+     */
 
     public function sendAll (){
         $cards = $this->paginate($this->Cards);
         echo json_encode($cards);
         exit();
-
-        /*
-        if ($id == null){
-            $this->Flash->success(__('The card no existe.'));
-            return;
-        }
-        $card = $this->Cards->get($id);
-
-        $this->set(compact('card'));
-        */
-
-    
+        
     }
+
+/**
+ * cardImage method
+ * 
+ * 
+ * 
+ * 
+ */
+
     public function cardImage ($id=null, $txt=null){
 
               
@@ -207,13 +209,8 @@ class CardsController extends AppController
         // ->toList();
 
 
-
-       
-
         // $query = $this->getTableLocator()->get('Readers')->find();
         // $query->where(['email'=>'lector1@lector1.com']);
-
-
 
         // debug ($query->all());
         // $query = $this->getTableLocator()->get('Readers')->find();
@@ -235,5 +232,13 @@ class CardsController extends AppController
         //echo json_encode ($card);
         exit();
 
+    }
+    /**
+     * 
+     */
+    public function image ($uri=null){
+        $card = $this->Cards->newEmptyEntity();
+        $card->img = $uri;
+        $this->set(compact('card'));
     }
 }
