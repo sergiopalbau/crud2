@@ -20,7 +20,7 @@ class CardsController extends AppController
     {
         parent::initialize();
         $this->Auth->allow(['image','sendAll','cardImage']);
-       // $this->Auth->allow(['logout', 'add']);
+       
     }
     /**
      * Index method
@@ -202,26 +202,7 @@ class CardsController extends AppController
            }
 
         //}
-        // $query = $this->getTableLocator()->get('Readers')
-        // ->find()
-        // ->select(['id','email'])
-        // ->where(['email'=>'lector@lector1.com'])
-        // ->toList();
-
-
-        // $query = $this->getTableLocator()->get('Readers')->find();
-        // $query->where(['email'=>'lector1@lector1.com']);
-
-        // debug ($query->all());
-        // $query = $this->getTableLocator()->get('Readers')->find();
-        // $query->where(['email'=>'lector2@gmail.com']);
-        // $reader = $query->all();
-        // echo $reader->id;
-        // debug ($query->all());
        
-        // foreach ($query->all() as $article) {
-        //     debug($article->email);
-        // }
         exit();
         $card = $this->Cards->get($id);
         //print_r ($card);
