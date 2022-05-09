@@ -11,6 +11,16 @@ namespace App\Controller;
  */
 class DisplaysController extends AppController
 {
+
+    /**
+     * initialize -- method accesible without login
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->Auth->allow(['addGet']);
+       
+    }
     /**
      * Index method
      *
@@ -50,8 +60,8 @@ class DisplaysController extends AppController
     public function add()
     {
         $display = $this->Displays->newEmptyEntity();
-        debug($display);
-        echo "<br><hr>";
+        // debug($display);
+        // echo "<br><hr>";
         
 
         if ($this->request->is('post')) {
@@ -71,31 +81,49 @@ class DisplaysController extends AppController
         $this->set(compact('display', 'readers', 'cards'));
     }
 
-    public function addGet($card=null, $reader = null)
-    {
-        if (!isset($card) || !isset ($reader)){
-            echo " there isn't arguments";
+    /**addGet
+     * 
+     */
+    public function addGet($card=null, $reader = null, $languaje = null)
+    {   
+        $idReader = 3; //anonimous user
+
+        //look for the intial arguments
+        if (!isset($card) || !isset ($reader) || !isset ($languaje)){
+            echo " there isn't enough arguments [card, reader, lang]";
             exit ();
         }
 
+        // find idReader
+      
+        $query = $this->getTableLocator()->get('Readers')
+        ->find()
+        ->select(['id','email'])
+        ->where(['email'=>$reader])
+        ->toList(); 
+        
+        if ( sizeof($query) >0){
+            $idReader = $query[0]['id'];
+        }
+      
         $display = $this->Displays->newEmptyEntity();
-        //debug($display);
-        //echo "<br><hr>";
-        $data = ["reader_id"=>$reader ,"card_id"=>$card];
-        // debug($data);exit();
+        $data = ["reader_id"=>$idReader ,"card_id"=>$card];
+        
+        //debug($data);exit();
+        
+        
         $display = $this->Displays->patchEntity($display, $data, ['validate' => false]);
-        //echo " despues de añadir <br><br><br>";
-        //debug ($display);
         
-        
-            if ($this->Displays->save($display)) {
-                //$this->Flash->success(__('The display has been saved.'));
-                // exit();
-                //return $this->redirect(['action' => 'index']);
-                return $this->redirect("/cards/view/$card");
+        // echo " despues de añadir <br><br><br>";  debug ($display);  exit();
               
-            }
-            $this->Flash->error(__('The display could not be saved. Please, try again.'));
+        if ($this->Displays->save($display)) {
+            //$this->Flash->success(__('The display has been saved.'));
+            // exit();
+            //return $this->redirect(['action' => 'index']);
+            return $this->redirect("/cards/cardImage/$card/$languaje");
+            
+        }
+        $this->Flash->error(__('The display could not be saved. Please, try again.'));
        
         
     }
