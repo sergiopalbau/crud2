@@ -4,11 +4,7 @@
  * @var \App\Model\Entity\Card $card
  */
 
-//  var_dump ($card);
-//  echo "<br><hr><br>";
-//  var_dump ($this);
-//  echo "<br><hr><br>";
-//  exit();
+
 ?>
 <div class="row">
     <aside class="column">

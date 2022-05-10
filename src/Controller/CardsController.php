@@ -19,7 +19,7 @@ class CardsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        $this->Auth->allow(['image','sendAll','cardImage']);
+        $this->Auth->allow(['image','sendAll','cardImage','view']);
        
     }
     /**
@@ -183,39 +183,23 @@ class CardsController extends AppController
  * 
  */
 
-    public function cardImage ($id=null, $txt=null){
+    public function cardImage ($id=null, $lang=null){
 
               
-        print "id ". $id . "  - txt ". $txt . "<br><hr><br>";
+        // print "id ". $id . "  - txt ". $lang . "<br><hr><br>";
 
-        $query = $this->getTableLocator()->get('Readers')
-                    ->find()
-                    ->select(['id','email'])
-                    ->where(['email'=>"$txt"])
-                    ->toList();
-        
-        
-        if (sizeof($query) == 1){
-               echo "<hr> Existe el lector ... <br>" . $query[0]['id'] ."-> ". $query[0]['email']."<br>";
-              // $sql = "INSERT INTO displays (reader_id, card_id, created, modified) VALUES (1, 12, NULL, NULL);";
-              
-           }
-
-        //}
        
-        exit();
         $card = $this->Cards->get($id);
-        //print_r ($card);
-        echo $card['img'];
+        // print_r ($card);
+        // echo $card['img'];
         $uri = WWW_ROOT.'img/cards/'.$card['img'];
-        //echo $uri;
-        echo "<img src='$uri' alt=''>";
-        //echo json_encode ($card);
-        exit();
+        $this->set(compact('card','lang'));
 
     }
+
+
     /**
-     * 
+     * image method -- returns img
      */
     public function image ($uri=null){
         $card = $this->Cards->newEmptyEntity();
